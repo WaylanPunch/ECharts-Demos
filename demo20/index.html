@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts 中的事件和行为</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+
+
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+    <script type="text/javascript">
+        // ECharts 支持常规的鼠标事件类型，包括 'click'、'dblclick'、'mousedown'、'mousemove'、'mouseup'、'mouseover'、'mouseout' 事件。
+
+        // 基于准备好的dom，初始化echarts实例
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+
+        var option = null;
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+
+            // 处理点击事件并且跳转到相应的百度搜索页面
+            myChart.on('click', function (params) {
+                window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+            });
+        }
+    </script>
+</body>
+
+</html>

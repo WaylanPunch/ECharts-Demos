@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>旭日图 - 数据下钻</title>
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+</head>
+
+<body>
+    <!-- 为 echarts 准备一个具备大小（宽高）的Dom。 -->
+    <div id="main" style="width: 800px;height:800px;"></div>
+    <!-- 引入刚才构建好的文件。 -->
+    <script type="text/javascript">
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+
+
+        // 创建旭日图需要在 series 配置项中声明类型为 'sunburst' 的系列，并且以树形结构声明其 data
+        var data = [{
+            name: 'Grandpa',
+            children: [{
+                name: 'Uncle Leo',
+                value: 15,
+                children: [{
+                    name: 'Cousin Jack',
+                    value: 2
+                }, {
+                    name: 'Cousin Mary',
+                    value: 5,
+                    children: [{
+                        name: 'Jackson',
+                        value: 2
+                    }]
+                }, {
+                    name: 'Cousin Ben',
+                    value: 4
+                }]
+            }, {
+                name: 'Father',
+                value: 10,
+                children: [{
+                    name: 'Me',
+                    value: 5
+                }, {
+                    name: 'Brother Peter',
+                    value: 1
+                }]
+            }]
+        }, {
+            name: 'Nancy',
+            children: [{
+                name: 'Uncle Nike',
+                children: [{
+                    name: 'Cousin Betty',
+                    value: 1
+                }, {
+                    name: 'Cousin Jenny',
+                    value: 2
+                }]
+            }]
+        }];
+
+        var option = null;
+        //旭日图默认支持数据下钻，也就是说，当点击了扇形块之后，将以该扇形块的数据作为根节点，便于进一步了解该数据的细节。
+        //当数据下钻后，中间会出现一个用于返回上一层的图形，该图形的样式可以通过 levels[0] 配置。
+        //如果不需要数据下钻功能，可以通过将 nodeClick 设置为 false 关闭；或者将其设为 'link'，并将 data.link 设为点击扇形块对应打开的链接。
+        option = {
+            series: {
+                type: 'sunburst',
+                // highlightPolicy: 'ancestor',
+                data: data,
+                radius: [0, '90%'],
+                label: {
+                    rotate: 'radial'
+                },
+                nodeClick: false//关闭数据下钻功能
+            }
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
+
+</html>

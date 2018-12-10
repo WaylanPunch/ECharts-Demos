@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>myProject</title>
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+</head>
+
+<body>
+    <!-- 为 echarts 准备一个具备大小（宽高）的Dom。 -->
+    <div id="main" style="width: 800px;height:800px;"></div>
+    <!-- 引入刚才构建好的文件。 -->
+    <script type="text/javascript">
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+        option = null;
+
+        function fetchData(cb) {
+            // 通过 setTimeout 模拟异步加载
+            setTimeout(function () {
+                cb({
+                    categories: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+                    data: [5, 20, 36, 10, 10, 20]
+                });
+            }, 1000);
+        }
+
+        // 初始 option
+        option = {
+            title: {
+                text: '异步数据加载示例'
+            },
+            tooltip: {},
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: []
+            }]
+        };
+
+        fetchData(function (data) {
+            //loading 动画
+            myChart.hideLoading();
+            myChart.setOption({
+                xAxis: {
+                    data: data.categories
+                },
+                series: [{
+                    // 根据名字对应到相应的系列
+                    name: '销量',
+                    data: data.data
+                }]
+            });
+        });;
+        if (option && typeof option === "object") {
+            //loading 动画
+            myChart.showLoading();
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts 中的事件和行为 - 代码触发 ECharts 中组件的行为</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+
+
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+    <script type="text/javascript">
+        // ECharts 支持常规的鼠标事件类型，包括 'click'、'dblclick'、'mousedown'、'mousemove'、'mouseup'、'mouseover'、'mouseout' 事件。
+
+        // 基于准备好的dom，初始化echarts实例
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+
+        var option = null;
+        // 指定图表的配置项和数据
+        option = {
+            title: {
+                text: '饼图程序调用高亮示例',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+            },
+            series: [{
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [{
+                        value: 335,
+                        name: '直接访问'
+                    },
+                    {
+                        value: 310,
+                        name: '邮件营销'
+                    },
+                    {
+                        value: 234,
+                        name: '联盟广告'
+                    },
+                    {
+                        value: 135,
+                        name: '视频广告'
+                    },
+                    {
+                        value: 1548,
+                        name: '搜索引擎'
+                    }
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
+
+        app.currentIndex = -1;
+
+        setInterval(function () {
+            var dataLen = option.series[0].data.length;
+            // 取消之前高亮的图形
+            myChart.dispatchAction({
+                type: 'downplay',
+                seriesIndex: 0,
+                dataIndex: app.currentIndex
+            });
+            app.currentIndex = (app.currentIndex + 1) % dataLen;
+            // 高亮当前图形
+            myChart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: app.currentIndex
+            });
+            // 显示 tooltip
+            myChart.dispatchAction({
+                type: 'showTip',
+                seriesIndex: 0,
+                dataIndex: app.currentIndex
+            });
+        }, 1000);
+
+        // 使用刚指定的配置项和数据显示图表。
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+
+            // 处理点击事件并且跳转到相应的百度搜索页面
+            /*
+            myChart.on('click', function (params) {
+                window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+            });
+            */
+        }
+    </script>
+</body>
+
+</html>

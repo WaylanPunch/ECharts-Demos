@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>myProject</title>
+    <!-- 引入 lib/echarts.custom.min.js -->
+    <script src="../echarts.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 绘制图表。
+        echarts.init(document.getElementById('main')).setOption({
+            backgroundColor: '#AAAAAA',
+            series: {
+                type: 'pie',
+                data: [{
+                        name: 'ABC',
+                        value: 1212
+                    },
+                    {
+                        name: 'BC',
+                        value: 2323
+                    },
+                    {
+                        name: 'C',
+                        value: 1919
+                    }
+                ]
+            }
+        });
+    </script>
+</body>
+
+</html>

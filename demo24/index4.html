@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>旭日图</title>
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+</head>
+
+<body>
+    <!-- 为 echarts 准备一个具备大小（宽高）的Dom。 -->
+    <div id="main" style="width: 800px;height:800px;"></div>
+    <!-- 引入刚才构建好的文件。 -->
+    <script type="text/javascript">
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+
+        var item1 = {
+            color: '#F54F4A'
+        };
+        var item2 = {
+            color: '#FF8C75'
+        };
+        var item3 = {
+            color: '#FFB499'
+        };
+
+        // 创建旭日图需要在 series 配置项中声明类型为 'sunburst' 的系列，并且以树形结构声明其 data
+        var data = [{
+            children: [{
+                value: 5,
+                children: [{
+                    value: 1,
+                    itemStyle: item1
+                }, {
+                    value: 2,
+                    children: [{
+                        value: 1,
+                        itemStyle: item2
+                    }]
+                }, {
+                    children: [{
+                        value: 1
+                    }]
+                }],
+                itemStyle: item1
+            }, {
+                value: 10,
+                children: [{
+                    value: 6,
+                    children: [{
+                        value: 1,
+                        itemStyle: item1
+                    }, {
+                        value: 1
+                    }, {
+                        value: 1,
+                        itemStyle: item2
+                    }, {
+                        value: 1
+                    }],
+                    itemStyle: item3
+                }, {
+                    value: 2,
+                    children: [{
+                        value: 1
+                    }],
+                    itemStyle: item3
+                }, {
+                    children: [{
+                        value: 1,
+                        itemStyle: item2
+                    }]
+                }],
+                itemStyle: item1
+            }],
+            itemStyle: item1
+        }, {
+            value: 9,
+            children: [{
+                value: 4,
+                children: [{
+                    value: 2,
+                    itemStyle: item2
+                }, {
+                    children: [{
+                        value: 1,
+                        itemStyle: item1
+                    }]
+                }],
+                itemStyle: item1
+            }, {
+                children: [{
+                    value: 3,
+                    children: [{
+                        value: 1
+                    }, {
+                        value: 1,
+                        itemStyle: item2
+                    }]
+                }],
+                itemStyle: item3
+            }],
+            itemStyle: item2
+        }, {
+            value: 7,
+            children: [{
+                children: [{
+                    value: 1,
+                    itemStyle: item3
+                }, {
+                    value: 3,
+                    children: [{
+                        value: 1,
+                        itemStyle: item2
+                    }, {
+                        value: 1
+                    }],
+                    itemStyle: item2
+                }, {
+                    value: 2,
+                    children: [{
+                        value: 1
+                    }, {
+                        value: 1,
+                        itemStyle: item1
+                    }],
+                    itemStyle: item1
+                }],
+                itemStyle: item3
+            }],
+            itemStyle: item1
+        }, {
+            children: [{
+                value: 6,
+                children: [{
+                    value: 1,
+                    itemStyle: item2
+                }, {
+                    value: 2,
+                    children: [{
+                        value: 2,
+                        itemStyle: item2
+                    }],
+                    itemStyle: item1
+                }, {
+                    value: 1,
+                    itemStyle: item3
+                }],
+                itemStyle: item3
+            }, {
+                value: 3,
+                children: [{
+                    value: 1,
+                }, {
+                    children: [{
+                        value: 1,
+                        itemStyle: item2
+                    }]
+                }, {
+                    value: 1
+                }],
+                itemStyle: item3
+            }],
+            itemStyle: item1
+        }];
+
+        var option = null;
+
+        //highlightPolicy 为 'descendant' 或 'ancestor'或 'self'或 'none' 的效果
+        //'descendant'（默认值）：高亮鼠标移动所在扇形块与其后代元素；
+        //'ancestor'：高亮鼠标所在扇形块与其祖先元素；
+        //'self'：仅高亮鼠标所在扇形块；
+        //'none'：不会淡化（downplay）其他元素。
+        option = {
+            series: {
+                radius: ['15%', '80%'],
+                type: 'sunburst',
+                sort: null,
+                highlightPolicy: 'ancestor',
+                data: data,
+                label: {
+                    rotate: 'radial'
+                },
+                levels: [],
+                itemStyle: {
+                    color: '#ddd',
+                    borderWidth: 2
+                }
+            }
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
+
+</html>

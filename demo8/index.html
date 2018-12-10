@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>myProject</title>
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+</head>
+
+<body>
+    <!-- 为 echarts 准备一个具备大小（宽高）的Dom。 -->
+    <div id="main" style="width: 800px;height:800px;"></div>
+    <!-- 引入刚才构建好的文件。 -->
+    <script type="text/javascript">
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+        option = null;
+        option = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
+                // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射，参见后文。
+                // dimensions: ['product', '2015', '2016', '2017'],
+                source: [
+                    
+                    ['product', '2015', '2016', '2017'],
+                    ['Matcha Latte', 43.3, 85.8, 93.7],
+                    ['Milk Tea', 83.1, 73.4, 55.1],
+                    ['Cheese Cocoa', 86.4, 65.2, 82.5],
+                    ['Walnut Brownie', 72.4, 53.9, 39.1]
+                ]
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: [{
+                    type: 'bar'
+                },
+                {
+                    type: 'bar'
+                },
+                {
+                    type: 'bar'
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
+
+</html>

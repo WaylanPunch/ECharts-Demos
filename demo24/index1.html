@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>旭日图</title>
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+</head>
+
+<body>
+    <!-- 为 echarts 准备一个具备大小（宽高）的Dom。 -->
+    <div id="main" style="width: 800px;height:800px;"></div>
+    <!-- 引入刚才构建好的文件。 -->
+    <script type="text/javascript">
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+
+
+        // 创建旭日图需要在 series 配置项中声明类型为 'sunburst' 的系列，并且以树形结构声明其 data
+
+        var option = null;
+        option = {
+            series: {
+                type: 'sunburst',
+                data: [{
+                    name: 'A',
+                    value: 10,
+                    children: [{
+                        value: 3,
+                        name: 'Aa'
+                    }, {
+                        value: 5,
+                        name: 'Ab'
+                    }]
+                }, {
+                    name: 'B',
+                    children: [{
+                        name: 'Ba',
+                        value: 4
+                    }, {
+                        name: 'Bb',
+                        value: 2
+                    }]
+                }, {
+                    name: 'C',
+                    value: 3
+                }]
+            }
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
+
+</html>

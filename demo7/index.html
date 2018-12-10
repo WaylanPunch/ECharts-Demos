@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>myProject</title>
+    <script src="../echarts.js"></script>
+    <script src="../vintage.js"></script>
+</head>
+
+<body>
+    <!-- 为 echarts 准备一个具备大小（宽高）的Dom。 -->
+    <div id="main" style="width: 800px;height:800px;"></div>
+    <!-- 引入刚才构建好的文件。 -->
+    <script type="text/javascript">
+        var dom = document.getElementById("main");
+        //var myChart = echarts.init(dom);
+        var myChart = echarts.init(dom, 'vintage');
+        var app = {};
+        option = null;
+        var base = +new Date(2014, 9, 3);
+        var oneDay = 24 * 3600 * 1000;
+        var date = [];
+
+        var data = [Math.random() * 150];
+        var now = new Date(base);
+
+        function addData(shift) {
+            now = [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/');
+            date.push(now);
+            data.push((Math.random() - 0.4) * 10 + data[data.length - 1]);
+
+            if (shift) {
+                date.shift();
+                data.shift();
+            }
+
+            now = new Date(+new Date(now) + oneDay);
+        }
+
+        for (var i = 1; i < 100; i++) {
+            addData();
+        }
+
+        option = {
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: date
+            },
+            yAxis: {
+                boundaryGap: [0, '50%'],
+                type: 'value'
+            },
+            series: [{
+                name: '成交',
+                type: 'line',
+                smooth: true,
+                symbol: 'none',
+                stack: 'a',
+                areaStyle: {
+                    normal: {}
+                },
+                data: data
+            }]
+        };
+
+        setInterval(function () {
+            //loading 动画
+            myChart.hideLoading();
+
+            addData(true);
+
+            myChart.setOption({
+                xAxis: {
+                    data: date
+                },
+                series: [{
+                    name: '成交',
+                    data: data
+                }]
+            });
+        }, 1000);
+
+        if (option && typeof option === "object") {
+
+            //loading 动画
+            myChart.showLoading();
+
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
+
+</html>
